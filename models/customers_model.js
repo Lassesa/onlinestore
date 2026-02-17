@@ -3,6 +3,13 @@ const bcrypt=require('bcryptjs');
 const saltrounds=12;
 
 const customers={
+    getAllCustomers(callback){
+        return db.query("SELECT * FROM customers",callback);
+    },
+    getOneCustomer(un,callback){
+        return db.query("SELECT * FROM customers WHERE username = ?",[un],callback); 
+
+    },
     add(newC,callback){
         bcrypt.hash(newC.password,saltrounds,function(err, hashedPassword){
             if(err){
@@ -20,6 +27,29 @@ const customers={
         });
 
         
+    },
+    update(un,newC,callback){
+        bcrypt.hash(newC.password,saltrounds,function(err, hashedPassword){ //ei toimi
+            if(err){
+                return callback(err.message);
+            }
+            else{
+                return db.query("UPDATE customers SET fname=?, lname=?,password=? WHERE username=?"[newC.fname, newC.lname, hashedPassword, un],callback)
+            }
+        });
+    },
+    updatePassword(un,newC,callback){
+        bcrypt.hash(newC.password, saltrounds,function(err, hashedPassword){
+            if(err){
+                return callback(err.message);
+            }
+            else{
+                return db.query("UPDATE customers SET password=? WHERE username=?"[hashedPassword,un],callback);
+            }
+        });
+    },
+    delete(un,callback){
+        return db.query("DELETE FROM customers WHERE username=?"[un],callback);
     }
 
 }
