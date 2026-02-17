@@ -34,7 +34,7 @@ const customers={
                 return callback(err.message);
             }
             else{
-                return db.query("UPDATE customers SET fname=?, lname=?,password=? WHERE username=?"[newC.fname, newC.lname, hashedPassword, un],callback)
+                return db.query("UPDATE customers SET fname=?, lname=?,password=? WHERE username=?",[newC.fname, newC.lname, hashedPassword, un],callback)
             }
         });
     },
@@ -44,12 +44,12 @@ const customers={
                 return callback(err.message);
             }
             else{
-                return db.query("UPDATE customers SET password=? WHERE username=?"[hashedPassword,un],callback);
+                return db.query("UPDATE customers SET password=? WHERE username=?",[hashedPassword,un],callback);
             }
         });
     },
     delete(un,callback){
-        return db.query("DELETE FROM customers WHERE username=?"[un],callback);
+        return db.query("DELETE FROM customers WHERE username=?",[un],callback);
     }
 
 }

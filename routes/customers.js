@@ -36,7 +36,7 @@ router.post('/', function(request, response){
 });
 
 router.put('/:u',function(request,response){
-    customers.update(request.params.u, request.body, function(err, result){ //ei toimi
+    customers.update(request.params.u, request.body, function(err, result){ 
         if(err){
             response.send(err);
         }
